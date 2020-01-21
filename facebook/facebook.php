@@ -43,10 +43,10 @@
 							</form>
 							<ul class="nav navbar-nav">
 							  <li>
-								<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+								<a href="facebook.php"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
-								<a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Post</a>
+								<a href="post.php" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Post</a>
 							  </li>
 							  <li>
 								<a href="#"><span class="badge">badge</span></a>
@@ -82,21 +82,14 @@
 										<div class="panel-body">
 										  <p class="lead">Urbanization</p>
 										  <p>45 Followers, 13 Posts</p>
-										  
 										  <p>
 											<img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
 										  </p>
 										</div>
 									  </div>
-										
-								   
 								  </div>
-								  
 								  <!-- main col right -->
 								  <div class="col-sm-7">
-									   
-		
-							  
 									   <div class="panel panel-default">
 									   <div class="panel-heading"> <h2>Welcome</h2></div>
 										  <div class="panel-body">
@@ -126,56 +119,11 @@
 									</p>
 								  </div>
 								</div>
-							  
-								
-							  
 							</div><!-- /col-9 -->
 						</div><!-- /padding -->
 					</div>
-					<!-- /main -->
-				  
+					<!-- /main -->				  
 				</div>
 			</div>
-		</div>
-
-
-		<!--post modal-->
-		<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		  <div class="modal-dialog">
-		  <div class="modal-content">
-			  <div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-					Update Status
-			  </div>
-			  <div class="modal-body">
-				  <form class="form center-block">
-					<div class="form-group">
-					  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-					</div>
-				  </form>
-			  </div>
-			  <div class="modal-footer">
-				  <div>
-				  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-					<ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-				  </div>	
-			  </div>
-		  </div>
-		  </div>
-		</div>
-        
-        <script type="text/javascript" src="assets/js/jquery.js"></script>
-        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-			$('[data-toggle=offcanvas]').click(function() {
-				$(this).toggleClass('visible-xs text-center');
-				$(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
-				$('.row-offcanvas').toggleClass('active');
-				$('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
-				$('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
-				$('#btnShow').toggle();
-			});
-        });
-        </script>
+		</div>		
 </body></html>
