@@ -100,11 +100,14 @@ hr {
    padding-right:0;
    width: 100%;
 }
+
 #main .img-circle {
-   margin-top:18px;
+   margin-top:18px; /*18px*/
+   margin-right:0px; /*0px*/
    height:70px;
    width:70px;
 }
+
 
 #sidebar {
     padding:0px;
