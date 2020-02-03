@@ -16,57 +16,91 @@ function connectDB()
         return $bdd;
 }
 
-///Obtenir tous les utilisateurs
-function getAllUsers()
+///Obtient tous les fichiers media
+function getAllMedia()
 {
         $db = connectDb();
-        $sql = "SELECT idUser, Nom, Prenom, idVoiture "
-                . "FROM Users "
-                . "ORDER BY Nom ASC";
-        $request = $db->prepare($sql);
-        $request->execute();
-        return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-///Obtenir tous les users avec leur voiture
-/*function getAllUsersWithVoitures()
-{
-        $db = connectDb();
-        $sql = "SELECT Users.idUser, Nom, Prenom, marque, modele "
-                . "FROM Users, Voitures "
-                . "WHERE Users.idUser = Voitures.IdUser";
-        $request = $db->prepare($sql);
-        $request->execute();
-        return $request->fetchAll(PDO::FETCH_ASSOC);
-}*/
-
-function getAllVoitures()
-{
-        $db = connectDb();
-        $sql = "SELECT idVoiture, marque, modele "
-                . "FROM Voitures "
-                . "ORDER BY marque ASC";
+        $sql = "SELECT idMedia, typeMedia, nomMedia, creationDate, modificationDate, idPost "
+                . "FROM Media "
+                . "ORDER BY idPost ASC";
         $request = $db->prepare($sql);
         $request->execute();
         return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-///Obtenir l'ID d'un user à l'aide de son nom et prenom
-///$Nom : nom de l'utilisateur
-///$Prenom : prenom de l'utilisateur
-function getUserIdByName($Nom, $Prenom)
+///Obtient tous les Posts
+function getAllPosts()
 {
         $db = connectDb();
-        $sql = "SELECT idUser "
-                . "FROM Users "
-                . "WHERE Nom = :Nom AND Prenom = :Prenom";
+        $sql = "SELECT idPost, commentaire, creationDate, modificationDate "
+                . "FROM Post "
+                . "ORDER BY creationDate DESC";
+        $request = $db->prepare($sql);
+        $request->execute();
+        return $request->fetchAll(PDO::FETCH_ASSOC);
+}
+
+///Obtenir l'ID d'un Post à l'aide du commentaire correspondant et la date de création
+///$commentaire : Commentaire correspondant
+///$creationDate : Date de creation
+function getPostIdByCommentAndDate($commentaire, $creationDate)
+{
+        $db = connectDb();
+        $sql = "SELECT idPost "
+                . "FROM Post "
+                . "WHERE commentaire = :commentaire AND creationDate = :creationDate";
         $request = $db->prepare($sql);
         $request->execute(array(
-                "Nom" => $Nom,
-                "Prenom" => $Prenom,
+                "commentaire" => $commentaire,
+                "creationDate" => $creationDate,
         ));
         return $request->fetch(PDO::FETCH_ASSOC);
 }
 
+///Ajoute un post
+///$Nom : nom du nouveau utilisateur
+///$Prenom : prenom du nouveau utilisateur
+function AddPost($commentaire, $creationDate, $modificationDate)
+{
+        $db = connectDb();
+        $sql = "INSERT INTO Post (commentaire, creationDate, modificationDate) "
+                . "Values (:commentaire, :creationDate, :modificationDate)";
+        $request = $db->prepare($sql);
+        if ($request->execute(array(
+                'commentaire' => $commentaire,
+                'creationDate' => $creationDate,
+                'modificationDate' => $modificationDate,
+        ))) {
+                return $db->lastInsertID();
+        } else {
+                return NULL;
+        }
+}
+
+///Ajoute un fichier Media
+///$typeMedia : type de fichier, exemple : png / jpg 
+///$nomMedia : nom du fichier media
+///$creationDate : date de  création
+///$modificationDate : date de derniere modification
+///$idPost : id du Post correspondant (fk)
+function AddMedia($typeMedia, $nomMedia, $creationDate, $modificationDate, $idPost)
+{
+        $db = connectDb();
+        $sql = "INSERT INTO Media (typeMedia, nomMedia, creationDate, modificationDate, idPost) "
+                . "Values (:typeMedia, :nomMedia, :creationDate, :modificationDate, :idPost)";
+        $request = $db->prepare($sql);
+        if ($request->execute(array(
+                'typeMedia' => $typeMedia,
+                'nomMedia' => $nomMedia,
+                'creationDate' => $creationDate,
+                'modificationDate' => $modificationDate,
+                'idPost' => $idPost,
+        ))) {
+                return $db->lastInsertID();
+        } else {
+                return NULL;
+        }
+}
 function getUserByID($idUser)
 {
         $db = connectDb();
@@ -80,18 +114,18 @@ function getUserByID($idUser)
         return $request->fetch(PDO::FETCH_ASSOC);
 }
 
-function getVoitureByID($idVoiture)
+///Obtenir tous les users avec leur voiture
+/*function getAllUsersWithVoitures()
 {
         $db = connectDb();
-        $sql = "SELECT marque, modele "
-                . "FROM Voitures "
-                . "WHERE idVoiture = :idVoiture";
+        $sql = "SELECT Users.idUser, Nom, Prenom, marque, modele "
+                . "FROM Users, Voitures "
+                . "WHERE Users.idUser = Voitures.IdUser";
         $request = $db->prepare($sql);
-        $request->execute(array(
-                "idVoiture" => $idVoiture,
-        ));
-        return $request->fetch(PDO::FETCH_ASSOC);
-}
+        $request->execute();
+        return $request->fetchAll(PDO::FETCH_ASSOC);
+}*/
+
 /*
 function getVoitureIdByUserID($idUser)
 {
@@ -142,45 +176,6 @@ function UpdateVoiture($idVoiture, $marque, $modele)
                 'marque' => $marque,
                 'modele' => $modele,
         ));     
-}
-
-///Ajoute un utilisateur
-///$Nom : nom du nouveau utilisateur
-///$Prenom : prenom du nouveau utilisateur
-function AddUser($Nom, $Prenom)
-{
-        $db = connectDb();
-        $sql = "INSERT INTO Users (Nom, Prenom) "
-                . "Values (:Nom, :Prenom)";
-        $request = $db->prepare($sql);
-        if ($request->execute(array(
-                'Nom' => $Nom,
-                'Prenom' => $Prenom,
-        ))) {
-                return $db->lastInsertID();
-        } else {
-                return NULL;
-        }
-}
-
-///Ajoute une voiture
-///$idUser : id de l'utilisateur correspondant (fk)
-///$marque : marque de la voiture
-///$modele : modele de la voiture
-function AddVoiture($marque, $modele)
-{
-        $db = connectDb();
-        $sql = "INSERT INTO Voitures (marque, modele) "
-                . "Values (:marque, :modele)";
-        $request = $db->prepare($sql);
-        if ($request->execute(array(
-                'marque' => $marque,
-                'modele' => $modele,
-        ))) {
-                return $db->lastInsertID();
-        } else {
-                return NULL;
-        }
 }
 
 ///Efface un utilisateur

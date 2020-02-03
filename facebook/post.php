@@ -1,7 +1,7 @@
 <?php
 
 
-$textToShare = filter_input(INPUT_POST, 'textToShare', FILTER_SANITIZE_STRING);
+//$textToShare = filter_input(INPUT_POST, 'textToShare', FILTER_SANITIZE_STRING);
 
 
 ?>
@@ -112,18 +112,17 @@ $textToShare = filter_input(INPUT_POST, 'textToShare', FILTER_SANITIZE_STRING);
 										<div class="panel-body">
 											<form action="upload.php" method="POST" enctype="multipart/form-data">
 
-												<input class="form-control" type="text" name="textToShare" placeholder="What do you want to share?">
+												<input class="form-control" type="text" name="comment" placeholder="What do you want to share?">
 												<div class="clearfix"></div>
 												<hr>
 
-												Select a file : <input type="file" name="fileToUpload" multiple="multiple" accept="image/png, image/jpeg, image/gif">
+												Select a file : <input type="file" name="fileToUpload[]" multiple accept="image/png, image/jpeg, image/gif, image/jpg">
 												<input type="submit" value="submit">
 											</form>
 
 										</div>
 									</div>
-
-								</div>
+								</div>								
 							</div>
 							<!--/row-->
 
