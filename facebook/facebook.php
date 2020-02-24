@@ -108,8 +108,6 @@
 
 											<?php 
 												include("displayAllPosts.php");
-
-												
 											?>
 										</div>
 									</div>

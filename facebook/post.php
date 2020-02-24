@@ -116,7 +116,7 @@
 												<div class="clearfix"></div>
 												<hr>
 
-												Select a file : <input type="file" name="fileToUpload[]" multiple accept="image/png, image/jpeg, image/gif, image/jpg">
+												Select a file : <input type="file" name="fileToUpload[]" multiple accept="image/*, audio/*, video/*">
 												<input type="submit" value="submit">
 											</form>
 

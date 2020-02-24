@@ -3,29 +3,35 @@
 require_once("dbConnection.php");
 $allPosts = getAllPosts();
 $allMedias = getAllMedia();
+$nbPosts = count($allPosts);
+$nbMedias = count($allMedias);
 
-foreach ($allPosts as $post) {
+for ($i=0; $i < $nbPosts; $i++) { 
+    # code...
 
-    foreach ($post as $key => $value) {
-        echo "$key : $value";
-        if ($key == "idPost") {
-            $idPost = $value;
-        }
+    echo $allPosts[$i]["commentaire"];
+    echo "<br>";
+    for ($j=0; $j < $nbMedias; $j++) { 
+        if ($allPosts[$i]["idPost"] == $allMedias[$j]["idPost"]) {
 
-        foreach ($allMedias as $media) {
-            foreach ($media as $key2 => $value2) {
-                if ($key == "nomMedia") {
-                    $nomMedia = $value;
-                }
+            $typeMedia = $allMedias[$j]["typeMedia"];
+            $type = explode('/', $typeMedia);
 
-                if ($key2 == "idPost" && $value2==$idPost) {
+            if ($type[0] == "image") {
+                echo '<img src="assets/img/'. $allMedias[$j]["nomMedia"] . '" width="500">';
+            }else if ($type[0] == "video") {
+                /*echo '<video controls loop autoplay width="500">'.
+                    '<source src="assets/video/'. $allMedias[$j]["nomMedia"] .'" type="video/mp4>' .
+                    '</video>';*/
 
-                    //echo "<img src='assets/img/150x150.gif'>";
-                }
+                echo '<video src="assets/video/'. $allMedias[$j]["nomMedia"] . '" controls loop autoplay width="500"></video>';
+            }else if ($type[0] == "audio") {
+                echo '<audio src="assets/audio/'. $allMedias[$j]["nomMedia"] . '" controls loop autoplay width="500"></audio>';
             }
+            
+            echo "<br>";
+            
         }
-
-        echo "<br>";
     }
     echo "<hr>";
 }

@@ -62,18 +62,29 @@ function getPostIdByCommentAndDate($commentaire, $creationDate)
 ///$Prenom : prenom du nouveau utilisateur
 function AddPost($commentaire, $creationDate, $modificationDate)
 {
-        $db = connectDb();
-        $sql = "INSERT INTO Post (commentaire, creationDate, modificationDate) "
-                . "Values (:commentaire, :creationDate, :modificationDate)";
-        $request = $db->prepare($sql);
-        if ($request->execute(array(
-                'commentaire' => $commentaire,
-                'creationDate' => $creationDate,
-                'modificationDate' => $modificationDate,
-        ))) {
-                return $db->lastInsertID();
-        } else {
-                return NULL;
+
+        try {
+                $id = -1;
+                $db = connectDb();
+                $db->beginTransaction();
+                $sql = "INSERT INTO Post (commentaire, creationDate, modificationDate) "
+                        . "Values (:commentaire, :creationDate, :modificationDate)";
+                $request = $db->prepare($sql);
+                $request->execute(array(
+                        'commentaire' => $commentaire,
+                        'creationDate' => $creationDate,
+                        'modificationDate' => $modificationDate,
+                ));
+                $id = $db->lastInsertID();
+                $db->commit();
+                return $id;
+        } catch (Exception $e) {
+                //An exception has occured, which means that one of our database queries
+                //failed.
+                //Print out the error message.
+                echo $e->getMessage();
+                //Rollback the transaction.
+                $db->rollBack();
         }
 }
 
@@ -85,22 +96,35 @@ function AddPost($commentaire, $creationDate, $modificationDate)
 ///$idPost : id du Post correspondant (fk)
 function AddMedia($typeMedia, $nomMedia, $creationDate, $modificationDate, $idPost)
 {
-        $db = connectDb();
-        $sql = "INSERT INTO Media (typeMedia, nomMedia, creationDate, modificationDate, idPost) "
-                . "Values (:typeMedia, :nomMedia, :creationDate, :modificationDate, :idPost)";
-        $request = $db->prepare($sql);
-        if ($request->execute(array(
-                'typeMedia' => $typeMedia,
-                'nomMedia' => $nomMedia,
-                'creationDate' => $creationDate,
-                'modificationDate' => $modificationDate,
-                'idPost' => $idPost,
-        ))) {
-                return $db->lastInsertID();
-        } else {
-                return NULL;
+        try {
+                $id = -1;
+                $db = connectDb();
+                $db->beginTransaction();
+
+                $sql = "INSERT INTO Media (typeMedia, nomMedia, creationDate, modificationDate, idPost) "
+                        . "Values (:typeMedia, :nomMedia, :creationDate, :modificationDate, :idPost)";
+                $request = $db->prepare($sql);
+                $request->execute(array(
+                        'typeMedia' => $typeMedia,
+                        'nomMedia' => $nomMedia,
+                        'creationDate' => $creationDate,
+                        'modificationDate' => $modificationDate,
+                        'idPost' => $idPost,
+                ));
+                $id = $db->lastInsertID();
+                $db->commit();
+                return $id;
+
+        } catch (Exception $e) {
+                //An exception has occured, which means that one of our database queries
+                //failed.
+                //Print out the error message.
+                echo $e->getMessage();
+                //Rollback the transaction.
+                $db->rollBack();
         }
 }
+////////////////////////////////////////////////////////////////////////
 function getUserByID($idUser)
 {
         $db = connectDb();
@@ -114,31 +138,6 @@ function getUserByID($idUser)
         return $request->fetch(PDO::FETCH_ASSOC);
 }
 
-///Obtenir tous les users avec leur voiture
-/*function getAllUsersWithVoitures()
-{
-        $db = connectDb();
-        $sql = "SELECT Users.idUser, Nom, Prenom, marque, modele "
-                . "FROM Users, Voitures "
-                . "WHERE Users.idUser = Voitures.IdUser";
-        $request = $db->prepare($sql);
-        $request->execute();
-        return $request->fetchAll(PDO::FETCH_ASSOC);
-}*/
-
-/*
-function getVoitureIdByUserID($idUser)
-{
-        $db = connectDb();
-        $sql = "SELECT marque, modele "
-                . "FROM Voitures "
-                . "WHERE idUser = :idUser";
-        $request = $db->prepare($sql);
-        $request->execute(array(
-                "idUser" => $idUser,
-        ));
-        return $request->fetch(PDO::FETCH_ASSOC);
-}*/
 
 ///Edite un utilisateur
 ///$idUser : id de l'utilisateur
@@ -175,7 +174,7 @@ function UpdateVoiture($idVoiture, $marque, $modele)
                 'idVoiture' => $idVoiture,
                 'marque' => $marque,
                 'modele' => $modele,
-        ));     
+        ));
 }
 
 ///Efface un utilisateur
