@@ -168,6 +168,7 @@ h1,h2,h3 {
 .btn-primary,.label-primary,.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus  {
 	background-color:#3B5999;
     color:#fffffe;
+    float: right;
 }
 .btn-default {
     color:#666666;

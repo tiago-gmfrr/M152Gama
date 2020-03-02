@@ -1,6 +1,6 @@
 <?php
 
-
+$idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_STRING);
 ?>
 
 <!DOCTYPE html>
@@ -107,29 +107,18 @@
 											<hr>
 
 											<?php 
+											if ($idPost == "") {
 												include("displayAllPosts.php");
+											}else{
+												include("updatePost.php");
+											}
+												
 											?>
 										</div>
 									</div>
 									
 									
 								</div>
-								<?php
-
-								/*foreach ($allPosts as $key => $value) {
-									echo '
-									<div class="col-sm-7">
-									<div class="panel panel-default">
-									<div class="panel-heading"> <h2>Welcome</h2></div>
-									   <div class="panel-body">										  
-										 <p><img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">Users name</a></p>
-										 <div class="clearfix"></div>
-										 <hr>											
-									   </div>
-									</div>																		
-								 </div>';
-								}*/
-								?>
 							</div>
 							<!--/row-->
 

@@ -114,6 +114,52 @@ function AddMedia($typeMedia, $nomMedia, $creationDate, $modificationDate, $idPo
                 $id = $db->lastInsertID();
                 $db->commit();
                 return $id;
+        } catch (Exception $e) {
+                //An exception has occured, which means that one of our database queries
+                //failed.
+                //Print out the error message.
+                echo $e->getMessage();
+                //Rollback the transaction.
+                $db->rollBack();
+        }
+}
+
+///Efface une Media
+///$idMedia : id de la media à effacer
+function DeleteMedia($idMedia)
+{
+        try {
+                $db = connectDb();
+                $db->beginTransaction();
+
+                $sql = "DELETE FROM Media WHERE idMedia = :idMedia";
+                $request = $db->prepare($sql);
+                $request->execute(array('idMedia' => $idMedia));
+                $db->commit();
+
+
+        } catch (Exception $e) {
+                //An exception has occured, which means that one of our database queries
+                //failed.
+                //Print out the error message.
+                echo $e->getMessage();
+                //Rollback the transaction.
+                $db->rollBack();
+        }
+}
+///Efface un Post
+///$idMedia : id du post à effacer
+function DeletePost($idPost)
+{
+        try {
+                $db = connectDb();
+                $db->beginTransaction();
+
+                $sql = "DELETE FROM Post WHERE idPost = :idPost";
+                $request = $db->prepare($sql);
+                $request->execute(array('idPost' => $idPost));
+                $db->commit();
+
 
         } catch (Exception $e) {
                 //An exception has occured, which means that one of our database queries
@@ -177,15 +223,7 @@ function UpdateVoiture($idVoiture, $marque, $modele)
         ));
 }
 
-///Efface un utilisateur
-///$idUser : id de l'utilisateur à effacer
-function DeleteUser($idUser)
-{
-        $db = connectDb();
-        $sql = "DELETE FROM Users WHERE idUser = :idUser";
-        $request = $db->prepare($sql);
-        return ($request->execute(array('idUser' => $idUser)));
-}
+
 
 ///Efface une voiture par rapport au utilisateur correspodant
 ///$idUser : id de l'utilisateur correspodant
