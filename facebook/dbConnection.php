@@ -57,6 +57,37 @@ function getPostIdByCommentAndDate($commentaire, $creationDate)
         return $request->fetch(PDO::FETCH_ASSOC);
 }
 
+///Obtenir un Post  a travers son id
+///$idPost : id correspondant
+function GetPostById($idPost)
+{
+        $db = connectDb();
+        $sql = "SELECT * "
+                . "FROM Post "
+                . "WHERE idPost = :idPost";
+        $request = $db->prepare($sql);
+        $request->execute(array(
+                "idPost" => $idPost,
+        ));
+        return $request->fetch(PDO::FETCH_ASSOC);
+}
+
+///Changer le commentaire d'un post precis
+///$idPost : id correspondant
+///$commentaire : nouveau commentaire
+function UpdatePostCommentaireById($idPost, $commentaire)
+{
+        $db = connectDb();
+        $sql = "UPDATE Post "
+                . "SET commentaire = :commentaire "
+                . "WHERE idPost = :idPost";
+        $request = $db->prepare($sql);
+        $request->execute(array(
+                "idPost" => $idPost,
+                "commentaire" => $commentaire,
+        ));
+}
+
 ///Ajoute un post
 ///$Nom : nom du nouveau utilisateur
 ///$Prenom : prenom du nouveau utilisateur

@@ -9,7 +9,7 @@ $nbMedias = count($allMedias);
 for ($i=0; $i < $nbPosts; $i++) { 
     # code...
 
-    echo $allPosts[$i]["commentaire"];
+    echo "<h4>". $allPosts[$i]["commentaire"] . "</h4>";
     echo "<br>";
     for ($j=0; $j < $nbMedias; $j++) { 
         if ($allPosts[$i]["idPost"] == $allMedias[$j]["idPost"]) {
@@ -20,10 +20,6 @@ for ($i=0; $i < $nbPosts; $i++) {
             if ($type[0] == "image") {
                 echo '<img src="assets/img/'. $allMedias[$j]["nomMedia"] . '" width="500">';
             }else if ($type[0] == "video") {
-                /*echo '<video controls loop autoplay width="500">'.
-                    '<source src="assets/video/'. $allMedias[$j]["nomMedia"] .'" type="video/mp4>' .
-                    '</video>';*/
-
                 echo '<video src="assets/video/'. $allMedias[$j]["nomMedia"] . '" controls loop autoplay width="500"></video>';
             }else if ($type[0] == "audio") {
                 echo '<audio src="assets/audio/'. $allMedias[$j]["nomMedia"] . '" controls width="500"></audio>';

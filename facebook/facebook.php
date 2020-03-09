@@ -102,17 +102,21 @@ $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_STRING);
 										</div>
 										<div class="panel-body">
 
-											<p><img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">How are you today?</a></p>
-											<div class="clearfix"></div>
-											<hr>
+											
 
 											<?php 
+
 											if ($idPost == "") {
+
+												echo '
+												<p><img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#"><h4>How are you today?</h4></a></p>
+												<div class="clearfix"></div>
+												<hr>';
 												include("displayAllPosts.php");
 											}else{
 												include("updatePost.php");
 											}
-												
+
 											?>
 										</div>
 									</div>
