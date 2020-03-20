@@ -41,6 +41,11 @@ if ($commentaire != "") {
 for ($i = 0; $i < $nbMedias; $i++) {
 
     if ($allMedias[$i]["idPost"] == $idPost) {
+        
+        //Get the media type
+        $typeMedia = $allMedias[$i]["typeMedia"];
+        $type = explode('/', $typeMedia);
+
         //If the user decides to delete one of the medias, remove it from the db and local files + reopen this page
         if ($idMedia == $allMedias[$i]["idMedia"]) {
 
@@ -58,8 +63,6 @@ for ($i = 0; $i < $nbMedias; $i++) {
         }
 
         $nbMediaInPost += 1;
-        $typeMedia = $allMedias[$i]["typeMedia"];
-        $type = explode('/', $typeMedia);
 
         if ($type[0] == "image") {
             echo '<img src="assets/img/' . $allMedias[$i]["nomMedia"] . '" width="500">';
@@ -68,9 +71,6 @@ for ($i = 0; $i < $nbMedias; $i++) {
         } else if ($type[0] == "audio") {
             echo '<audio src="assets/audio/' . $allMedias[$i]["nomMedia"] . '" controls width="500"></audio>';
         }
-
-
-
 
         echo '<a href="facebook.php?idPost=' . $idPost .  '&idMedia=' . $allMedias[$i]["idMedia"] . '" class="btn btn-primary"> Delete </a>';
         echo "<br/>";
