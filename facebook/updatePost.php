@@ -1,4 +1,11 @@
 <?php
+
+/*
+Author : Gama Tiago
+Class : I-FA.P3A
+Version : V1.0
+Desc : Script displays a specifc post, then allows the user do delete the associated medias or the associated comment 
+*/
 require_once("dbConnection.php");
 
 $idMedia = filter_input(INPUT_GET, "idMedia", FILTER_SANITIZE_STRING);
@@ -34,6 +41,7 @@ if ($commentaire != "") {
 for ($i = 0; $i < $nbMedias; $i++) {
 
     if ($allMedias[$i]["idPost"] == $idPost) {
+        //If the user decides to delete one of the medias, remove it from the db and local files + reopen this page
         if ($idMedia == $allMedias[$i]["idMedia"]) {
 
             if ($type[0] == "image") {
@@ -72,9 +80,9 @@ for ($i = 0; $i < $nbMedias; $i++) {
 <input type="submit" name="submit" value="Update" class="btn btn-primary" />
 </form>
 <?php
-//echo $nbMediaInPost;
+
+//If no medias or comment are associated to a post, delete it
 if ($nbMediaInPost == 0) {
     header("Location: deletePost.php?idPost=$idPost");
 }
 
-//DeletePost($idPost);

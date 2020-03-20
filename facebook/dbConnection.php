@@ -1,4 +1,13 @@
 <?php
+
+/*
+Author : Gama Tiago
+Class : I-FA.P3A
+Version : V1.0
+Desc : Script containing all database queries and connections, transactions are used when necessary
+*/
+
+
 ///Connection à la base de données
 function connectDB()
 {
@@ -201,74 +210,5 @@ function DeletePost($idPost)
                 $db->rollBack();
         }
 }
-////////////////////////////////////////////////////////////////////////
-function getUserByID($idUser)
-{
-        $db = connectDb();
-        $sql = "SELECT Nom, Prenom "
-                . "FROM Users "
-                . "WHERE idUser = :idUser";
-        $request = $db->prepare($sql);
-        $request->execute(array(
-                "idUser" => $idUser,
-        ));
-        return $request->fetch(PDO::FETCH_ASSOC);
-}
 
 
-///Edite un utilisateur
-///$idUser : id de l'utilisateur
-///$Nom : nom de l'utilisateur
-///$Prenom : prenom de l'utilisateur
-function UpdateUser($idUser, $Nom, $Prenom)
-{
-        $db = connectDb();
-        $sql = "UPDATE Users SET "
-                . "Nom=:Nom, "
-                . "Prenom=:Prenom "
-                . "WHERE idUser=:idUser";
-        $request = $db->prepare($sql);
-        $request->execute(array(
-                'idUser' => $idUser,
-                'Nom' => $Nom,
-                'Prenom' => $Prenom,
-        ));
-}
-
-///Edite une voiture
-///$idUser : id de l'utilisateur
-///$marque : marque de la voiture
-///$modele : modele de la voiture
-function UpdateVoiture($idVoiture, $marque, $modele)
-{
-        $db = connectDb();
-        $sql = "UPDATE Voitures SET "
-                . "marque=:marque, "
-                . "modele=:modele "
-                . "WHERE idVoiture=:idVoiture";
-        $request = $db->prepare($sql);
-        $request->execute(array(
-                'idVoiture' => $idVoiture,
-                'marque' => $marque,
-                'modele' => $modele,
-        ));
-}
-
-
-
-///Efface une voiture par rapport au utilisateur correspodant
-///$idUser : id de l'utilisateur correspodant
-function DeleteVoiture($idVoiture)
-{
-        $db = connectDb();
-        $sql = "DELETE FROM Voitures WHERE idVoiture = :idVoiture";
-        $request = $db->prepare($sql);
-        return ($request->execute(array('idVoiture' => $idVoiture)));
-}
-
-///Efface un utilisateur et efface la voiture correspodante
-///$idUser : id de l'utilisateur à effacer
-/*function DeleteUserAndVoiture($idUser){        
-        DeleteVoiture($idUser);
-        DeleteUser($idUser);
-}*/

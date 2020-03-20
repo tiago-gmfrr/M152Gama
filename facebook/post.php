@@ -1,12 +1,10 @@
-<?php
-
-
-//$textToShare = filter_input(INPUT_POST, 'textToShare', FILTER_SANITIZE_STRING);
-
-
-?>
-
 <!DOCTYPE html>
+
+<!--
+HTML Template from : https://usebootstrap.com/theme/facebook
+Desc : Page where the user can upload his desired medias + a comment to go allong his post
+
+-->
 <html lang="en">
 
 <head>

@@ -1,4 +1,10 @@
+
 <?php
+
+/*
+HTML Template from : https://usebootstrap.com/theme/facebook
+Desc : HTML page containing the structure of the website
+*/
 
 $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_STRING);
 ?>
@@ -12,9 +18,6 @@ $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_STRING);
 	<title>Facebook Theme Demo</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="assets/css/bootstrap.css" rel="stylesheet">
-	<!--[if lt IE 9]>
-          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 	<link href="assets/css/facebook.css" rel="stylesheet">
 </head>
 
@@ -100,10 +103,7 @@ $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_STRING);
 										<div class="panel-heading">
 											<h2>Welcome Tiago</h2>
 										</div>
-										<div class="panel-body">
-
-											
-
+										<div class="panel-body">											
 											<?php 
 
 											if ($idPost == "") {

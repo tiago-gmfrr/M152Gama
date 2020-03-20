@@ -1,7 +1,19 @@
 <?php
+
+/*
+
+Initial structure of the script taken from stackoverflow ( didnt't save url )
+Modified by : Gama Tiago
+Class : I-FA.P3A
+Version : V1.0
+Desc : Script displays all posts and the associated medias  
+*/
+
 require_once("dbConnection.php");
 
 $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+
+// -1 is an arbitrary number used to represent somthing unset, used aswell in dcConnection.php
 $idPost = -1;
 // Target directory, where file will be saved
 $target_dir = "./assets/img/";
@@ -57,10 +69,10 @@ for ($i = 0; $i < $total; $i++) {
 
                 header("location: facebook.php");
             } else {
-                echo "rip";
+                echo "There was an error uploading your file";
             }
         } else {
-            echo "rip";
+            echo "The media is notone of the accepted types, please only use images, videos  or audios";
         }
     }
 }
